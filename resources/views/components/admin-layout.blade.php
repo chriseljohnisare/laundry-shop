@@ -99,6 +99,27 @@
                     <span class="font-bold ml-3 text-sm tracking-tight">Client Directory</span>
                 </a>
 
+                <div class="px-4 py-8 text-[10px] font-black uppercase tracking-[0.3em] text-slate-600">Access Control</div>
+
+                <a href="{{ route('admin.users.index') }}" class="nav-link flex items-center px-4 py-3.5 rounded-2xl transition-all duration-300 group {{ request()->routeIs('admin.users.index') ? 'nav-link-active' : '' }}">
+                    <i class="fas fa-users-gear w-6 text-lg transition-transform group-hover:scale-110"></i>
+                    <span class="font-bold ml-3 text-sm tracking-tight">Staff & Users</span>
+                </a>
+
+                <a href="{{ route('admin.users.pending') }}" class="nav-link flex items-center px-4 py-3.5 rounded-2xl transition-all duration-300 group {{ request()->routeIs('admin.users.pending') ? 'nav-link-active' : '' }}">
+                    <i class="fas fa-user-clock w-6 text-lg transition-transform group-hover:scale-110"></i>
+                    <span class="font-bold ml-3 text-sm tracking-tight">Pending Approvals</span>
+                    @php $unapprovedCount = \App\Models\User::where('is_approved', false)->count(); @endphp
+                    @if($unapprovedCount > 0)
+                        <span class="ml-auto bg-amber-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-lg shadow-amber-500/40">{{ $unapprovedCount }}</span>
+                    @endif
+                </a>
+
+                <a href="{{ route('admin.logs.index') }}" class="nav-link flex items-center px-4 py-3.5 rounded-2xl transition-all duration-300 group {{ request()->routeIs('admin.logs.*') ? 'nav-link-active' : '' }}">
+                    <i class="fas fa-list-ul w-6 text-lg transition-transform group-hover:scale-110"></i>
+                    <span class="font-bold ml-3 text-sm tracking-tight">Activity Logs</span>
+                </a>
+
                 <div class="px-4 py-8 text-[10px] font-black uppercase tracking-[0.3em] text-slate-600">System Controls</div>
 
                 <a href="{{ route('admin.revenue.index') }}" class="nav-link flex items-center px-4 py-3.5 rounded-2xl transition-all duration-300 group {{ request()->routeIs('admin.revenue.*') ? 'nav-link-active' : '' }}">

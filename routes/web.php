@@ -29,6 +29,12 @@ Route::middleware(['auth', 'role:admin,staff'])->prefix('admin')->name('admin.')
     Route::resource('orders', AdminOrder::class);
     Route::resource('services', AdminService::class);
     Route::get('revenue', [\App\Http\Controllers\Admin\RevenueController::class, 'index'])->name('revenue.index');
+
+    // User Management & Approvals
+    Route::get('users/pending', [\App\Http\Controllers\Admin\UserController::class, 'pending'])->name('users.pending');
+    Route::post('users/{user}/approve', [\App\Http\Controllers\Admin\UserController::class, 'approve'])->name('users.approve');
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    Route::get('logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('logs.index');
     
     Route::post('orders/{order}/status', [AdminOrder::class, 'updateStatus'])->name('orders.status');
     Route::post('orders/{order}/weight', [AdminOrder::class, 'updateWeight'])->name('orders.weight');
