@@ -36,6 +36,10 @@ Route::middleware(['auth', 'role:admin,staff'])->prefix('admin')->name('admin.')
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
     Route::get('logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('logs.index');
     
+    // Data Export
+    Route::get('export/orders', [\App\Http\Controllers\Admin\ExportController::class, 'exportOrders'])->name('export.orders');
+    Route::get('export/revenue', [\App\Http\Controllers\Admin\ExportController::class, 'exportRevenue'])->name('export.revenue');
+    
     Route::post('orders/{order}/status', [AdminOrder::class, 'updateStatus'])->name('orders.status');
     Route::post('orders/{order}/weight', [AdminOrder::class, 'updateWeight'])->name('orders.weight');
     Route::get('orders/{order}/print', [AdminOrder::class, 'print'])->name('orders.print');
