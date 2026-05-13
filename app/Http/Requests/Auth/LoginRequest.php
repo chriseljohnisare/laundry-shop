@@ -50,6 +50,14 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        if (! Auth::user()->is_approved) {
+            Auth::logout();
+
+            throw ValidationException::withMessages([
+                'email' => 'Your account is pending approval by an administrator.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 

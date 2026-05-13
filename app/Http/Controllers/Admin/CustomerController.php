@@ -59,6 +59,7 @@ class CustomerController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'customer',
+            'is_approved' => true,
         ]);
 
         Customer::create([
