@@ -14,75 +14,10 @@
     <!-- Live Tracker -->
     <div class="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-gray-100 mb-8 overflow-hidden relative">
         <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-50 opacity-50 rounded-full blur-3xl -mr-20 -mt-20"></div>
-        <h3 class="text-xl font-black text-gray-900 mb-12 relative z-10">Live Tracker</h3>
+        <h3 class="text-xl font-black text-gray-900 mb-4 relative z-10">Live Tracker</h3>
         
         <div class="relative z-10">
-            <!-- Progress Line -->
-            <div class="absolute top-[22px] left-0 w-full h-1.5 bg-gray-100 rounded-full hidden sm:block"></div>
-            
-            @php
-                $statuses = [
-                    'received' => ['label' => 'Received', 'icon' => 'fa-box-open', 'desc' => 'We have your items.'],
-                    'washing' => ['label' => 'Washing', 'icon' => 'fa-soap', 'desc' => 'In the machine.'],
-                    'drying' => ['label' => 'Drying', 'icon' => 'fa-wind', 'desc' => 'Tumble drying.'],
-                    'folding' => ['label' => 'Folding', 'icon' => 'fa-shirt', 'desc' => 'Being folded.'],
-                    'ready' => ['label' => 'Ready', 'icon' => 'fa-check-double', 'desc' => 'Ready for you.'],
-                ];
-                $keys = array_keys($statuses);
-                $currentIndex = array_search($order->status, $keys);
-                
-                // Override for completed/returned
-                if (in_array($order->status, ['completed', 'returned'])) {
-                    $currentIndex = 4; // Max out the visual bar
-                }
-            @endphp
-            
-            <!-- Active Line -->
-            <div class="absolute top-[22px] left-0 h-1.5 bg-indigo-500 rounded-full transition-all duration-1000 hidden sm:block" style="width: {{ ($currentIndex / 4) * 100 }}%;"></div>
-            
-            <!-- Dots & Labels -->
-            <div class="relative flex flex-col sm:flex-row justify-between gap-8 sm:gap-0">
-                @foreach($statuses as $key => $data)
-                    @php
-                        $index = array_search($key, $keys);
-                        $isCompleted = $index <= $currentIndex;
-                        $isCurrent = $index === $currentIndex;
-                        
-                        // Fix for completed overriding 'ready' visually as the last step
-                        if (in_array($order->status, ['completed', 'returned']) && $key === 'ready') {
-                            $data['label'] = 'Completed';
-                            $data['icon'] = 'fa-box-check';
-                            $data['desc'] = 'Order finished.';
-                        }
-                    @endphp
-                    <div class="flex sm:flex-col items-center sm:w-32 relative z-10 group">
-                        <!-- Icon Circle -->
-                        <div class="h-12 w-12 rounded-2xl flex items-center justify-center border-[3px] transition-all duration-500 flex-shrink-0 z-10 bg-white
-                            {{ $isCompleted ? 'border-indigo-500 text-indigo-600 shadow-lg shadow-indigo-200' : 'border-gray-200 text-gray-300' }}
-                            {{ $isCurrent ? 'ring-4 ring-indigo-50 scale-110' : '' }}">
-                            <i class="fas {{ $data['icon'] }} {{ $isCurrent ? 'animate-bounce' : '' }}"></i>
-                        </div>
-                        
-                        <!-- Mobile Line connector -->
-                        @if(!$loop->last)
-                            <div class="absolute left-6 top-12 w-0.5 h-full bg-gray-100 -z-10 sm:hidden"></div>
-                            @if($isCompleted && $index < $currentIndex)
-                                <div class="absolute left-6 top-12 w-0.5 h-full bg-indigo-500 -z-10 sm:hidden"></div>
-                            @endif
-                        @endif
-
-                        <!-- Text Content -->
-                        <div class="ml-6 sm:ml-0 sm:mt-6 sm:text-center">
-                            <p class="text-sm font-black uppercase tracking-widest {{ $isCurrent ? 'text-indigo-600' : ($isCompleted ? 'text-gray-900' : 'text-gray-400') }}">
-                                {{ $data['label'] }}
-                            </p>
-                            <p class="text-xs font-bold text-gray-400 mt-1 sm:mt-2 opacity-0 sm:opacity-100 group-hover:opacity-100 transition-opacity hidden sm:block">
-                                {{ $data['desc'] }}
-                            </p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+            <x-order-stepper :currentStatus="$order->status" :orderId="$order->id" />
         </div>
     </div>
 
