@@ -24,14 +24,19 @@ class DashboardController extends Controller
 
         // Monthly revenue for the last 6 months
         $monthlyRevenue = Payment::select(
-                DB::raw('SUM(amount) as total'),
-                DB::raw("DATE_FORMAT(paid_at, '%b %Y') as month")
+                \Illuminate\Support\Facades\DB::raw('SUM(amount) as total'),
+                \Illuminate\Support\Facades\DB::raw("strftime('%m %Y', paid_at) as month")
             )
             ->whereNotNull('paid_at')
             ->groupBy('month')
             ->orderBy('paid_at', 'desc')
             ->limit(6)
             ->get()
+            ->map(function ($item) {
+                // Convert back to "Month Year" format for the view
+                $item->month = date('M Y', strtotime(substr($item->month, 0, 2) . '/01/' . substr($item->month, 3)));
+                return $item;
+            })
             ->reverse();
 
         $ordersByService = Order::select('services.name', DB::raw('count(*) as count'))
