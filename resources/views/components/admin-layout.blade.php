@@ -94,9 +94,28 @@
                     @endif
                 </a>
 
-                <a href="{{ route('admin.customers.index') }}" class="nav-link flex items-center px-4 py-3.5 rounded-2xl transition-all duration-300 group {{ request()->routeIs('admin.customers.*') ? 'nav-link-active' : '' }}">
-                    <i class="fas fa-user-group w-6 text-lg transition-transform group-hover:scale-110"></i>
-                    <span class="font-bold ml-3 text-sm tracking-tight">Client Directory</span>
+                <a href="{{ route('admin.logs.index') }}" class="nav-link flex items-center px-4 py-3.5 rounded-2xl transition-all duration-300 group {{ request()->routeIs('admin.logs.*') ? 'nav-link-active' : '' }}">
+                    <i class="fas fa-list-ul w-6 text-lg transition-transform group-hover:scale-110"></i>
+                    <span class="font-bold ml-3 text-sm tracking-tight">Activity Logs</span>
+                </a>
+
+                <a href="{{ route('admin.users.index') }}" class="nav-link flex items-center px-4 py-3.5 rounded-2xl transition-all duration-300 group {{ request()->routeIs('admin.users.index') ? 'nav-link-active' : '' }}">
+                    <i class="fas fa-users w-6 text-lg transition-transform group-hover:scale-110"></i>
+                    <span class="font-bold ml-3 text-sm tracking-tight">Staff & Users</span>
+                </a>
+
+                <a href="{{ route('admin.users.pending') }}" class="nav-link flex items-center px-4 py-3.5 rounded-2xl transition-all duration-300 group {{ request()->routeIs('admin.users.pending') ? 'nav-link-active' : '' }}">
+                    <i class="fas fa-user-clock w-6 text-lg transition-transform group-hover:scale-110"></i>
+                    <span class="font-bold ml-3 text-sm tracking-tight">Pending Approvals</span>
+                    @php $pendingUsersCount = \App\Models\User::where('is_approved', false)->count(); @endphp
+                    @if($pendingUsersCount > 0)
+                        <span class="ml-auto bg-amber-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-lg shadow-amber-500/40">{{ $pendingUsersCount }}</span>
+                    @endif
+                </a>
+
+                <a href="{{ route('admin.settings.index') }}" class="nav-link flex items-center px-4 py-3.5 rounded-2xl transition-all duration-300 group {{ request()->routeIs('admin.settings.*') ? 'nav-link-active' : '' }}">
+                    <i class="fas fa-sliders-h w-6 text-lg transition-transform group-hover:scale-110"></i>
+                    <span class="font-bold ml-3 text-sm tracking-tight">System Settings</span>
                 </a>
 
                 <div class="px-4 py-8 text-[10px] font-black uppercase tracking-[0.3em] text-slate-600">Access Control</div>

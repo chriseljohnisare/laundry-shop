@@ -31,7 +31,7 @@ class UserController extends Controller
         if ($user->id === auth()->id()) {
             return back()->with('error', "You cannot delete your own account.");
         }
-        
+
         $user->delete();
         return back()->with('success', "User deleted successfully.");
     }

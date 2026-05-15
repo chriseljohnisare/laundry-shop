@@ -55,7 +55,7 @@
                                     <button x-data @click="$dispatch('open-modal', 'log-details-{{ $log->id }}')" class="text-[10px] font-black uppercase tracking-widest text-indigo-500 hover:text-indigo-700 transition-colors">
                                         View JSON
                                     </button>
-                                    
+
                                     <x-modal name="log-details-{{ $log->id }}" :show="false">
                                         <div class="p-8">
                                             <h3 class="text-lg font-black text-slate-900 mb-4">Payload Details</h3>

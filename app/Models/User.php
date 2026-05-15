@@ -11,12 +11,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'username', 'role', 'password', 'is_approved'])]
+#[Fillable(['name', 'email', 'username', 'role', 'password', 'is_approved', 'profile_picture'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, LogsActivity;
+
+    public function getAvatarUrlAttribute()
+    {
+        return $this->profile_picture 
+            ? asset('storage/' . $this->profile_picture) 
+            : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=7F9CF5&background=EBF4FF';
+    }
 
     public function customer()
     {

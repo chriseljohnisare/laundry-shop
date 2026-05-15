@@ -39,6 +39,16 @@ Route::middleware(['auth', 'role:admin,staff'])->prefix('admin')->name('admin.')
     // Data Export
     Route::get('export/orders', [\App\Http\Controllers\Admin\ExportController::class, 'exportOrders'])->name('export.orders');
     Route::get('export/revenue', [\App\Http\Controllers\Admin\ExportController::class, 'exportRevenue'])->name('export.revenue');
+
+    // User Management & Approvals
+    Route::get('users/pending', [\App\Http\Controllers\Admin\UserController::class, 'pending'])->name('users.pending');
+    Route::post('users/{user}/approve', [\App\Http\Controllers\Admin\UserController::class, 'approve'])->name('users.approve');
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    Route::get('logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('logs.index');
+
+    // Settings
+    Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
+    Route::post('settings', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
     
     Route::post('orders/{order}/status', [AdminOrder::class, 'updateStatus'])->name('orders.status');
     Route::post('orders/{order}/weight', [AdminOrder::class, 'updateWeight'])->name('orders.weight');

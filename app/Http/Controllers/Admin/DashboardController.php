@@ -23,18 +23,23 @@ class DashboardController extends Controller
             ->get();
 
         // Monthly revenue for the last 6 months
+        $isSqlite = DB::connection()->getDriverName() === 'sqlite';
+        $monthFormat = $isSqlite ? "strftime('%m-%Y', paid_at)" : "DATE_FORMAT(paid_at, '%b %Y')";
+
         $monthlyRevenue = Payment::select(
-                \Illuminate\Support\Facades\DB::raw('SUM(amount) as total'),
-                \Illuminate\Support\Facades\DB::raw("strftime('%m %Y', paid_at) as month")
+                DB::raw('SUM(amount) as total'),
+                DB::raw("{$monthFormat} as month")
             )
             ->whereNotNull('paid_at')
             ->groupBy('month')
             ->orderBy('paid_at', 'desc')
             ->limit(6)
             ->get()
-            ->map(function ($item) {
-                // Convert back to "Month Year" format for the view
-                $item->month = date('M Y', strtotime(substr($item->month, 0, 2) . '/01/' . substr($item->month, 3)));
+            ->map(function ($item) use ($isSqlite) {
+                if ($isSqlite) {
+                    // Convert "MM-YYYY" back to "M Y" format for the view
+                    $item->month = date('M Y', strtotime(substr($item->month, 0, 2) . '/01/' . substr($item->month, 3)));
+                }
                 return $item;
             })
             ->reverse();
