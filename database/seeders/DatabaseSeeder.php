@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'customer',
             'password' => Hash::make('password'),
             'role' => 'customer',
+            'is_approved' => true,
         ]);
 
         // Customer Profile

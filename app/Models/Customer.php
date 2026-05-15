@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
 #[Fillable(['user_id', 'name', 'contact_number', 'email', 'address', 'profile_picture'])]
 class Customer extends Model
 {
+    use LogsActivity;
+
     public function user()
     {
         return $this->belongsTo(User::class);

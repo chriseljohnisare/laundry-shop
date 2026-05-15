@@ -53,8 +53,6 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('login'))->with('status', 'Your account has been created and is pending approval by an administrator.');
     }
 }
