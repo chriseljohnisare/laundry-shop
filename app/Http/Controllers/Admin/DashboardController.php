@@ -35,6 +35,13 @@ class DashboardController extends Controller
             ->orderBy('paid_at', 'desc')
             ->limit(6)
             ->get()
+            ->map(function ($item) use ($isSqlite) {
+                if ($isSqlite) {
+                    // Convert "MM-YYYY" back to "M Y" format for the view
+                    $item->month = date('M Y', strtotime(substr($item->month, 0, 2) . '/01/' . substr($item->month, 3)));
+                }
+                return $item;
+            })
             ->reverse();
 
         $ordersByService = Order::select('services.name', DB::raw('count(*) as count'))
