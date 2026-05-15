@@ -5,6 +5,9 @@
             <p class="text-gray-500 font-medium">Financial analytics and performance tracking.</p>
         </div>
         <div class="flex items-center space-x-3">
+            <a href="{{ route('admin.export.revenue') }}" class="bg-white border border-gray-200 text-gray-700 px-4 py-2.5 rounded-xl font-bold text-sm shadow-sm hover:bg-gray-50 transition-all flex items-center">
+                <i class="fas fa-file-csv mr-2 text-indigo-500"></i> Export to CSV
+            </a>
             <button onclick="window.print()" class="bg-white border border-gray-200 text-gray-700 px-4 py-2.5 rounded-xl font-bold text-sm shadow-sm hover:bg-gray-50 transition-all flex items-center">
                 <i class="fas fa-print mr-2 text-indigo-500"></i> Print Report
             </button>

@@ -27,7 +27,16 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Order Status Stepper -->
+    <div class="bg-white rounded-[3rem] p-10 border border-slate-100 shadow-sm mb-10">
+        <div class="flex items-center justify-between mb-8">
+            <h3 class="text-xl font-black text-gray-900 tracking-tight">Production Timeline</h3>
+            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Real-time Tracking</span>
+        </div>
+        <x-order-stepper :currentStatus="$order->status" :orderId="$order->id" />
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <!-- Left Column: Details & Status -->
         <div class="lg:col-span-2 space-y-8">
             

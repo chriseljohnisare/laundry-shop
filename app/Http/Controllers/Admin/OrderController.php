@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Service;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -67,7 +68,19 @@ class OrderController extends Controller
             'status' => 'required|in:received,washing,drying,folding,ready,completed,returned',
         ]);
 
+        $oldStatus = $order->status;
         $order->update(['status' => $request->status]);
+
+        // Notify customer if status changed
+        if ($oldStatus !== $request->status && $order->customer && $order->customer->user_id) {
+            Notification::create([
+                'user_id' => $order->customer->user_id,
+                'title' => 'Order Status Updated',
+                'message' => "Your order #{$order->receipt_number} status has been updated to " . strtoupper($request->status) . ".",
+                'type' => $request->status === 'ready' ? 'success' : 'info',
+                'link' => route('customer.orders.show', $order),
+            ]);
+        }
 
         return back()->with('success', 'Order status updated successfully.');
     }

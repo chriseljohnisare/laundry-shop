@@ -5,9 +5,9 @@
             <p class="text-gray-500 font-medium">Track, update, and manage all laundry transactions.</p>
         </div>
         <div class="flex space-x-3">
-            <button class="bg-white border border-gray-200 text-gray-700 px-4 py-2.5 rounded-xl font-bold text-sm shadow-sm hover:bg-gray-50 transition-all flex items-center">
+            <a href="{{ route('admin.export.orders') }}" class="bg-white border border-gray-200 text-gray-700 px-4 py-2.5 rounded-xl font-bold text-sm shadow-sm hover:bg-gray-50 transition-all flex items-center">
                 <i class="fas fa-file-export mr-2 text-indigo-500"></i> Export Data
-            </button>
+            </a>
             <a href="{{ route('admin.orders.create') }}" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-black text-sm shadow-lg shadow-indigo-200 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all flex items-center">
                 <i class="fas fa-plus mr-2"></i> New Order
             </a>
