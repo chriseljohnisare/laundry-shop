@@ -30,6 +30,16 @@ class User extends Authenticatable
         return $this->hasOne(Customer::class);
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->hasMany(Notification::class)->whereNull('read_at');
+    }
+
     public function isAdmin()
     {
         return $this->role === 'admin';
