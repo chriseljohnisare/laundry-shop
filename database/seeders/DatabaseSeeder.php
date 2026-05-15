@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'admin',
             'password' => Hash::make('password'),
             'role' => 'admin',
+            'is_approved' => true,
         ]);
 
         // Staff
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'staff',
             'password' => Hash::make('password'),
             'role' => 'staff',
+            'is_approved' => true,
         ]);
 
         // Customer User

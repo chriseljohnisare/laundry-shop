@@ -23,9 +23,12 @@ class DashboardController extends Controller
             ->get();
 
         // Monthly revenue for the last 6 months
+        $isSqlite = DB::connection()->getDriverName() === 'sqlite';
+        $monthFormat = $isSqlite ? "strftime('%m-%Y', paid_at)" : "DATE_FORMAT(paid_at, '%b %Y')";
+
         $monthlyRevenue = Payment::select(
                 DB::raw('SUM(amount) as total'),
-                DB::raw("DATE_FORMAT(paid_at, '%b %Y') as month")
+                DB::raw("{$monthFormat} as month")
             )
             ->whereNotNull('paid_at')
             ->groupBy('month')

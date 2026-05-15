@@ -60,9 +60,7 @@
                     <!-- Profile Dropdown -->
                     <div class="relative group">
                         <button class="flex items-center space-x-3 text-sm font-bold text-gray-700 hover:text-indigo-600 transition-colors focus:outline-none">
-                            <div class="h-10 w-10 bg-gradient-to-tr from-indigo-100 to-indigo-200 text-indigo-600 rounded-full flex items-center justify-center font-black shadow-inner">
-                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                            </div>
+                            <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}" class="h-10 w-10 rounded-xl object-cover border-2 border-white shadow-md">
                             <span>{{ Auth::user()->name }}</span>
                             <i class="fas fa-chevron-down text-xs text-gray-400"></i>
                         </button>
